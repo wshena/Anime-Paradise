@@ -66,7 +66,7 @@ const page = () => {
             {
               apiData.map((item:SeasonsInfo) => {
                 return (
-                  <AnimeCardSmall title={item.title} image={item.images.jpg.image_url} key={item.mal_id} synopsis={item.synopsis}/>							
+                  <AnimeCardSmall type={item.type} id={item.mal_id} title={item.title} image={item.images.jpg.image_url} key={item.mal_id} synopsis={item.synopsis}/>							
                 )
               })
             }

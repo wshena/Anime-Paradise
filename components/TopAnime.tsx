@@ -1,27 +1,34 @@
-import axios from 'axios';
+"use client";
 import Link from 'next/link';
-import React from 'react'
-import {AnimeCard} from './AnimeCard';
-import { TopMangaAnime } from '@/types';
+import React, { useEffect, useState } from 'react'
+import { GetTopAnime } from '@/utils/api';
+import { BigCarousel } from './Carousel';
 
-const TopAnime = async () => {
-	const apiData = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/top/anime?limit=8`);
-	const anime = apiData.data;
+const TopAnime = () => {
+	const [thisTopAnime, setThisTopAnime] = useState({ data: [] });
+	const fetchData = async () => {
+		const apiData = await GetTopAnime();
+		if (apiData) setThisTopAnime(apiData)
+	}
+
+	useEffect(() => {
+		fetchData();
+	}, [])
+
   return (
-    <section id="top_anime" className='container'>
-			<div className="flex items-center justify-between mb-6">
-				<h1>Top Anime</h1>
-				<Link href={'/anime/topAnime'}>See more</Link>
+    <section id="top_anime" className='w-full overflow-hidden'>
+			<div className="container">
+				<div className="flex items-center justify-between mb-0">
+					<h1>Top Anime</h1>
+					<Link href={'/anime/topAnime'}>See more</Link>
+				</div>
+				<div className="hidden 2xl:block mt-[15px]">
+					<BigCarousel data={thisTopAnime.data} />
+				</div>
 			</div>
 
-			<div className="flex flex-col items-center justify-center md:grid md:grid-cols-3 lg:grid-cols-4 gap-5 ">
-				{
-					anime.data.map((item:TopMangaAnime) => {
-						return (
-							<AnimeCard id={item.mal_id} title={item.title} image={item.images.jpg.image_url} key={item.mal_id}/>							
-						)
-					})
-				}
+			<div className="block mt-[10px] 2xl:hidden">
+				<BigCarousel data={thisTopAnime.data} />
 			</div>
 		</section>
   )

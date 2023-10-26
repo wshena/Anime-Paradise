@@ -36,7 +36,7 @@ const page = () => {
             {
               manga.map((item:TopMangaAnime) => {
                 return (
-                  <AnimeCardSmall title={item.title} image={item.images.jpg.image_url} key={item.mal_id} synopsis={item.synopsis}/>							
+                  <AnimeCardSmall id={item.mal_id} type={item.type} title={item.title} image={item.images.jpg.image_url} key={item.mal_id} synopsis={item.synopsis}/>							
                 )
               })
             }
@@ -45,7 +45,7 @@ const page = () => {
         </div>
       
         <div className="w-[100%] flex items-center justify-center">
-          <div className="w-[20%]">
+          <div className="w-[100%] lg:w-[20%]">
             <div className="flex justify-between items-center mt-10">
               <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous Page</button>
               <button onClick={() => setCurrentPage(currentPage + 1)} disabled={!hasNextPage}>Next Page</button>

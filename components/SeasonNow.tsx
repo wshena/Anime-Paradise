@@ -1,27 +1,35 @@
-import axios from 'axios';
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
-import {AnimeCard} from './AnimeCard';
-import { SeasonsInfo } from '@/types';
+import { GetThisAnimeSeasons } from '@/utils/api';
+import { BigCarousel } from './Carousel';
 
-const SeasonNow = async () => {
-	const apiData = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/seasons/now?limit=8`);
-	const anime = apiData.data;
+const SeasonNow = () => {
+
+	const [thisAnimeSeason, setThisAnimeSeason] = useState({ data: [] });
+	const fetchData = async () => {
+		const apiData = await GetThisAnimeSeasons();
+		if (apiData) setThisAnimeSeason(apiData)
+	}
+
+	useEffect(() => {
+		fetchData();
+	}, [])
 
   return (
-    <section id="anime-season-now" className='container'>
-			<div className="flex items-center justify-between mb-6">
-				<h1>This Season Anime</h1>
-				<Link href={'/anime/seasons'}>See more</Link>
+    <section id="anime-season-now" className='w-full overflow-hidden'>
+			<div className="container">
+				<div className="flex items-center justify-between mb-0">
+					<h1>This Season Anime</h1>
+					<Link href={'/anime/seasons'}>See more</Link>
+				</div>
+				<div className="hidden 2xl:block mt-[15px]">
+					<BigCarousel data={thisAnimeSeason.data} />
+				</div>
 			</div>
-			<div className="flex flex-col items-center justify-center md:grid md:grid-cols-3 lg:grid-cols-4 md:gap-10 gap-5">
-				{
-					anime.data.map((item:SeasonsInfo) => {
-						return (
-							<AnimeCard id={item.mal_id} title={item.title} image={item.images.jpg.image_url} key={item.mal_id}/>							
-						)
-					})
-				}
+
+			<div className="block mt-[10px] 2xl:hidden">
+				<BigCarousel data={thisAnimeSeason.data} />
 			</div>
 		</section>
   )

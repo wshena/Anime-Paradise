@@ -5,22 +5,44 @@ import React, { useState } from 'react'
 import {PiCrownSimpleFill} from 'react-icons/pi'
 import {FiPlay} from 'react-icons/fi'
 
-const AnimeCard = ({id, title, image}:bigCardProps) => {
+const AnimeCard = ({id, title, image, type, synopsis}:bigCardProps) => {
+	const [isHovered, setIsHovered] = useState(false);
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
-		<Link 
-		href="/anime/[id]/[title]"
-		as={`/anime/${id}/${title}`}
-		className='w-[250px] md:w-[200px] lg:w-[250px] h-[350px] shadow-[0px_10px_1px_rgba(221,_221,_221,_1),_0_10px_20px_rgba(204,_204,_204,_1)] bg-cover relative' style={{
-			backgroundImage: `url(${image})`
-		}}>
-			<div className="absolute left-0 bottom-0 w-[100%] py-3 px-3 bg-gray-900">
-				<h1 className='text-white font-bold text-[1rem] md:text-[1.2rem]'>{title}</h1>
+		<Link href={`${type.toLowerCase() === 'manga' ? "/manga/[id]/[title]" : "/anime/[id]/[title]"}`} as={`${type.toLowerCase() === 'manga' ? `/manga/${id}/${title}` : `/anime/${id}/${title}`}`} className='relative' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+			<img src={image} alt={title} className="w-[100%] h-[100%]"/>
+			<div className="absolute bottom-0 w-[100%] h-[50px] z-10 bg-black opacity-40"></div>
+			<div className="absolute bottom-0 p-2 text-white w-[100%] overflow-hidden z-20">
+				<h1 className="text-[0.8rem] font-bold">{title}</h1>
 			</div>
+
+			{
+				isHovered && (
+					<div className="p-[20px] z-50 absolute top-0 left-0 w-full h-[100%] bg-black bg-opacity-70 text-white">
+						<h1 className='font-bold text-[1rem] mb-[10px]'>{title}</h1>
+						{
+							synopsis.length > 150 ? (
+								<p>
+									{`${synopsis.slice(0, 150)}...`}
+								</p>
+							) : (
+								<p>{synopsis}</p>
+							)
+						}
+					</div>
+				)
+			}
 		</Link>
   )
 }
 
-const AnimeCardSmall = ({title, image, synopsis}:smallCardProps) => {
+const AnimeCardSmall = ({title, type, id, image, synopsis}:smallCardProps) => {
 	const [isHovered, setIsHovered] = useState(false);
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -30,7 +52,7 @@ const AnimeCardSmall = ({title, image, synopsis}:smallCardProps) => {
   };
 
 	return (
-		<Link href="#" className='relative w-[250px] md:w-[200px] lg:w-[150px] h-[250px] shadow-[0px_10px_1px_rgba(221,_221,_221,_1),_0_10px_20px_rgba(204,_204,_204,_1)] p-2' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+		<Link href={`${type.toLowerCase() === 'manga' ? "/manga/[id]/[title]" : "/anime/[id]/[title]"}`} as={`${type.toLowerCase() === 'manga' ? `/manga/${id}/${title}` : `/anime/${id}/${title}`}`} className='relative w-[250px] md:w-[200px] lg:w-[150px] h-[250px] shadow-[0px_10px_1px_rgba(221,_221,_221,_1),_0_10px_20px_rgba(204,_204,_204,_1)] p-2' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 			<div className="w-[100%] h-[85%]">
 				<img src={image} alt={title} className='w-[100%] h-[100%]'/>
 			</div>

@@ -4,12 +4,16 @@ export interface bigCardProps {
 	title: string,
 	image: string,
   id: number,
+  type:string,
+  synopsis: string
 }
 
 export interface smallCardProps {
 	title: string,
 	image: string,
-	synopsis: string
+	synopsis: string,
+  id: number,
+  type:string,
 }
 
 export interface episodeCardProps {
@@ -18,6 +22,7 @@ export interface episodeCardProps {
   episodes?: {
     title: string;
     premium: boolean;
+    url: string;
   }[];
 }
 export interface CustomButtonProps {
@@ -439,4 +444,148 @@ export interface AnimeDetails {
     name: string;
     url: string;
   }[];
+}
+
+export interface MangaDetails {
+  mal_id: number;
+  url: string;
+  images: {
+    jpg: {
+      image_url: string;
+      small_image_url: string;
+      large_image_url: string;
+    };
+    webp: {
+      image_url: string;
+      small_image_url: string;
+      large_image_url: string;
+    };
+  };
+  approved: boolean;
+  titles: { type: string; title: string }[];
+  title: string;
+  title_english: string;
+  title_japanese: string;
+  title_synonyms: string[];
+  type: string;
+  chapters: number;
+  volumes: number;
+  status: string;
+  publishing: boolean;
+  published: {
+    from: string;
+    to: string;
+    prop: { from: { day: number; month: number; year: number }; to: { day: number; month: number; year: number } };
+    string: string;
+  };
+  score: number;
+  scored: number;
+  scored_by: number;
+  rank: number;
+  popularity: number;
+  members: number;
+  favorites: number;
+  synopsis: string;
+  background: string;
+  authors: {
+    mal_id: number;
+    type: string;
+    name: string;
+    url: string;
+  }[];
+  serializations: {
+    mal_id: number;
+    type: string;
+    name: string;
+    url: string;
+  }[];
+  genres: {
+    mal_id: number;
+    type: string;
+    name: string;
+    url: string;
+  }[];
+  explicit_genres: any[]; // You can specify a more specific type if necessary
+  themes: {
+    mal_id: number;
+    type: string;
+    name: string;
+    url: string;
+  }[];
+  demographics: {
+    mal_id: number;
+    type: string;
+    name: string;
+    url: string;
+  }[];
+  relations: {
+    relation: string;
+    entry: {
+      mal_id: number;
+      type: string;
+      name: string;
+      url: string;
+    }[];
+  }[];
+  external: {
+    name: string;
+    url: string;
+  }[];
+}
+
+export interface AnimeMangaRecomendations {
+  entry: {
+    mal_id: number;
+    url: string;
+    images: {
+      jpg: {
+        image_url: string;
+        small_image_url: string;
+        large_image_url: string;
+      };
+      webp: {
+        image_url: string;
+        small_image_url: string;
+        large_image_url: string;
+      };
+    };
+    title: string;
+  };
+  url: string;
+  votes: number;
+}
+
+export interface AnimeMangaReview {
+  mal_id: number;
+  url: string;
+  type: string;
+  reactions: {
+    overall: number;
+    nice: number;
+    love_it: number;
+    funny: number;
+    confusing: number;
+    informative: number;
+    well_written: number;
+    creative: number;
+  };
+  date: string;
+  review: string;
+  score: number;
+  tags: string[];
+  is_spoiler: boolean;
+  is_preliminary: boolean;
+  chapters_read: number | null;
+  user: {
+    url: string;
+    username: string;
+    images: {
+      jpg: {
+        image_url: string;
+      };
+      webp: {
+        image_url: string;
+      };
+    };
+  };
 }

@@ -1,75 +1,116 @@
 import axios from "axios";
 
-const THIS_ANIME_SEASON = 'this-anime-season';
-const TOP_ANIME = 'top-anime';
-const TOP_MANGA = 'top-manga';
-
-export const thisAnimeSeason = async () => {
-  const checkData = localStorage.getItem(THIS_ANIME_SEASON);
-	if (checkData) {
-		return JSON.parse(checkData);
-	} else {
-		try {
-			const config = {
-				method: 'GET',
-				url: 'https://api.jikan.moe/v4/seasons/now'
-			}
-			const respone = await axios.request(config);
-			localStorage.setItem(THIS_ANIME_SEASON, JSON.stringify(respone.data))
-			return respone.data;
-		} catch (error) {
-			console.log(error);
-		}
-	}
-}
-
-export const topAnime = async () => {
-	const checkData = localStorage.getItem(TOP_ANIME);
-	if (checkData) {
-		return JSON.parse(checkData);
-	} else {
-		try {
-			const config = {
-				method: 'GET',
-				url: 'https://api.jikan.moe/v4/top/anime'
-			}
-			const respone = await axios.request(config);
-			localStorage.setItem(TOP_ANIME, JSON.stringify(respone.data))
-			return respone.data;
-		} catch (error) {
-			console.log(error);
-		}
-	}
-}
-
-export const topManga = async () => {
-	const checkData = localStorage.getItem(TOP_MANGA);
-	if (checkData) {
-		return JSON.parse(checkData);
-	} else {
-		try {
-			const config = {
-				method: 'GET',
-				url: 'https://api.jikan.moe/v4/top/manga'
-			}
-			const respone = await axios.request(config);
-			localStorage.setItem(TOP_MANGA, JSON.stringify(respone.data))
-			return respone.data;
-		} catch (error) {
-			console.log(error);
-		}
-	}
-}
-
-export const getAnimeFullById = async (id) => {
+// Anime API
+export const GetThisAnimeSeasons = async () => {
 	try {
 		const config = {
-			method: 'GET',
-			url: `https://api.jikan.moe/v4/anime/${id}/full`
+			url: `${process.env.NEXT_PUBLIC_HOST_API}/seasons/now`
 		}
-		const respone = await axios.request(config);		
-		return respone.data.data;
+	
+		const respones = await axios.request(config);
+		return respones.data;
 	} catch (error) {
 		console.log(error)
 	}
 }
+
+export const GetTopAnime = async () => {
+	try {
+		const config = {
+			url: `${process.env.NEXT_PUBLIC_HOST_API}/top/anime`
+		}
+	
+		const respones = await axios.request(config);
+		return respones.data;
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const GetAnimeDetailById = async (id:number) => {
+	try {
+		const respone = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/anime/${id}/full`);
+		return respone.data.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const GetAnimePicturesById = async (id:number) => {
+	try {
+		const respone = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/anime/${id}/pictures`);
+		return respone.data.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const GetAnimeRecomendationsById = async (id:number) => {
+	try {
+		const respone = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/anime/${id}/recommendations`);
+		return respone.data.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const GetAnimeReviewsById = async (id:number) => {
+	try {
+		const respone = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/anime/${id}/reviews`);
+		return respone.data.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+// Anime API
+
+// Manga API
+export const GetTopManga = async () => {
+	try {
+		const config = {
+			url: `${process.env.NEXT_PUBLIC_HOST_API}/top/manga`
+		}
+		
+		const respones = await axios.request(config);
+		return respones.data;
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const GetMangaDetailById = async (id:number) => {
+	try {
+		const respone = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/manga/${id}/full`);
+		return respone.data.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const GetMangaPicturesById = async (id:number) => {
+	try {
+		const respone = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/manga/${id}/pictures`);
+		return respone.data.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const GetMangaRecomendationsById = async (id:number) => {
+	try {
+		const respone = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/manga/${id}/recommendations`);
+		return respone.data.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const GetMangaReviewsById = async (id:number) => {
+	try {
+		const respone = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/manga/${id}/reviews`);
+		return respone.data.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+// Manga API

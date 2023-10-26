@@ -15,8 +15,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='w-full'>
-        <Navbar />
-        {children}
+        <div className="z-50">
+          <Navbar />
+        </div>
+        <div className="z-10">
+          {children}
+        </div>
       </body>
     </html>
   )
