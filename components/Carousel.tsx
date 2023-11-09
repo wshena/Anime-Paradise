@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { AnimeMangaRecomendations, SeasonsInfo } from "@/types";
+import { AnimeMangaRecomendations, SeasonsInfo, TopMangaAnime } from "@/types";
 import Link from "next/link";
 import { useRef } from "react";
 import {GrFormNextLink, GrFormPreviousLink} from 'react-icons/gr'
@@ -43,7 +43,7 @@ const settings = {
 	],
 };
 
-export const BigCarousel = ({data}) => {
+export const BigCarousel = ({data}: {data:TopMangaAnime}) => {
 	const slideRef = useRef(null);
 	const next = () => {
 		slideRef?.current?.slickNext();
