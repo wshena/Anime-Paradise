@@ -4,6 +4,7 @@ import { AnimeMangaRecomendations, AnimeMangaReview, MangaDetails } from '@/type
 import Link from 'next/link';
 import { SmallCarousel } from '@/components/Carousel';
 import { GetMangaDetailById, GetMangaPicturesById, GetMangaRecomendationsById, GetMangaReviewsById } from '@/utils/api';
+import Loading from '../../../../components/Loading';
 
 interface ImageUrls {
   jpg: {
