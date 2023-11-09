@@ -76,7 +76,7 @@ const page = ({ params }: { params: { id: number } }) => {
   }, [params.id]);
 
   if (!mangaDetails) {
-    return <div>Loading...</div>;
+    return <Loading />
   }
 
   return (

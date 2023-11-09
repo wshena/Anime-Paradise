@@ -1,5 +1,6 @@
 "use client";
 import { SmallCarousel } from "@/components/Carousel";
+import Loading from "@/components/Loading";
 import { AnimeDetails, AnimeMangaRecomendations, AnimeMangaReview } from "@/types";
 import { GetAnimeDetailById, GetAnimePicturesById, GetAnimeRecomendationsById, GetAnimeReviewsById } from "@/utils/api";
 import Link from "next/link";
@@ -77,7 +78,7 @@ const AnimeDetail = ({ params }: { params: { id: number } }) => {
   }, [params.id]);
 
   if (!animeDetails) {
-    return <div>Loading...</div>;
+    return <Loading />
   }
 
   return (
@@ -155,7 +156,7 @@ const AnimeDetail = ({ params }: { params: { id: number } }) => {
 											<p>{relation.relation}:</p>
 											{
 												relation.entry.map((item, idx) => {
-													return <Link href={item.url}>{item.name}</Link>
+													return <Link key={idx} href={item.url}>{item.name}</Link>
 												})
 											}
 										</div>
@@ -226,7 +227,7 @@ const AnimeDetail = ({ params }: { params: { id: number } }) => {
           <div className="w-[100%] lg:w-[80%] mx-auto">
             <h1 className='font-bold text-[1.5rem] mb-7 text-center'>Reviews</h1>
             {
-              (animeReviews.length !== 0) ? (
+              (animeReviews?.length !== 0) ? (
                 <div className="">
                   {
                     animeReviews.map((review:AnimeMangaReview) => {

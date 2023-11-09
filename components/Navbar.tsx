@@ -1,10 +1,11 @@
 "use client";
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { navbarLinks } from '@/constant';
 import CustomButton from './CustomButton';
 import {BiSearchAlt ,BiMenuAltRight} from 'react-icons/bi'
 import {AiOutlineCloseCircle} from 'react-icons/ai'
+import { useRouter } from 'next/navigation';
 
 const NavbarLinks = ({item}) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -43,6 +44,9 @@ const NavbarLinks = ({item}) => {
 
 const Navbar = () => {
   const [isClick, setIsClick] = useState(false);
+  const history = useRouter();
+  const [input, setInput] = useState('');
+
   const handleClick = () => {
     setIsClick(!isClick)
 
@@ -52,6 +56,15 @@ const Navbar = () => {
       document.body.classList.remove('no-scroll');
     }
   }  
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    history.push(`/search/${input}`); // Ubah URL sesuai dengan nilai input
+  };
 
   return (
     <nav className='container z-50 relative'>
@@ -70,8 +83,8 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-[15px]">
-          <form method='GET' action='' className='lg:flex items-center justify-between border px-3 py-2 w-[400px] rounded-[5px] hidden'>
-            <input type='text' name='title' id='title' placeholder='Search anime, manga, or more...' autoComplete='off' className='w-[95%] focus:outline-none'></input>
+          <form onSubmit={handleFormSubmit} className='lg:flex items-center justify-between border px-3 py-2 w-[400px] rounded-[5px] hidden'>
+            <input type='text' name='title' id='title' placeholder='Search anime, manga, or more...' autoComplete='off' className='w-[95%] focus:outline-none' value={input} onChange={handleInputChange}></input>
             <button type='submit'> <BiSearchAlt /> </button>
           </form>
           <button className='md:block lg:hidden hidden'> <BiSearchAlt /> </button>

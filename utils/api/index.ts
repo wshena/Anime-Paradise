@@ -62,6 +62,15 @@ export const GetAnimeReviewsById = async (id:number) => {
 		console.log(error)
 	}
 }
+
+export const SearchAnime = async (title:string) => {
+	try {
+		const respones = await axios.get(`${process.env.NEXT_PUBLIC_HOST_API}/anime?q=${title}`);
+		return respones.data
+	} catch (error) {
+		console.log(error);
+	}
+}
 // Anime API
 
 // Manga API
